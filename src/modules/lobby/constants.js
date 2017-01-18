@@ -1,1 +1,2 @@
-export const DUMMIE_ACTION = "DUMMIE_ACTION"
+export const PLAYER_ENTERED = "PLAYER_ENTERED"
+export const PLAYER_EXITED = "PLAYER_EXITED"

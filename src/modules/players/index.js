@@ -3,7 +3,8 @@ import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
 /*Custom imports*/
 import { Players } from './components/players'
-import { setTotal, willFetchPlayers, successFetchPlayers, errorFetchPlayers } from './actions'
+import { willFetchPlayers, successFetchPlayers, errorFetchPlayers } from './actions'
+import { setTotal, filter, enteredLobby } from './actions'
 import { fetchPlayers } from './requests'
 
 class PlayersContainer extends Component{
@@ -16,36 +17,54 @@ class PlayersContainer extends Component{
         this.props.refresh()
     }
 
+    getActions() {
+        const { activeFilter, enterLobby } = this.props
+        return {
+            toggleTeamFilter: () => {
+                let filterName = (activeFilter == 'noFilter') ? 'playersWithTeams' : 'noFilter'
+                this.props.filter(filterName)
+            },
+            enterLobbyFactory: (player) => {
+                return () => {
+                    enterLobby(player)
+                }
+            }
+
+        }
+    }
+
     render() {
-        const { players, isLoading, errors, total, actions } = this.props
+        const { players, isLoading, errors, total } = this.props
         return (
             <Players
-                actions={ actions } 
-                total={ total } 
-                list={ players } 
-                isLoading={ isLoading } 
+                actions={ this.getActions() }
+                total={ total }
+                list={ players }
+                isLoading={ isLoading }
                 errors={ errors } />
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    const { players, isLoading, errors, total } = state.players
+    const { players, isLoading, errors, total, activeFilter } = state.players
     return {
         players,
         isLoading,
         errors,
         total,
+        activeFilter,
     }
 }
 
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: {
-            toggleTeamFilter: () => {
-                console.log("FILTER")
-            }
+        filter: filterName => {
+            dispatch(filter(filterName))
+        },
+        enterLobby: player => {
+            dispatch(enteredLobby(player))
         },
         refresh: () => {
             dispatch(willFetchPlayers())

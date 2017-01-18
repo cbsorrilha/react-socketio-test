@@ -1,10 +1,20 @@
 import React, {Component, PropTypes} from 'react'
 
-export const Player = ({ player }) => {
+const LobbyBtn = ({click, onLobby}) => {
+    if (!onLobby) {
+        return (<button onClick={click} className="btn btn-default">Entrar no Lobby</button>)
+    }
+    return (
+        <button className="btn btn-success">No Lobby</button>
+    )
+}
+
+const Player = ({ player, actionFactories}) => {
+    const { enterLobbyFactory } = actionFactories
     return (
         <div className="player">
             <div className="lobbyBtn">
-                <button className="btn btn-default">Entrar no Lobby</button>
+                <LobbyBtn click={ enterLobbyFactory(player) } onLobby={ player.lobby } />
             </div>
             <div className="playerData">
                 <div className="playerAvatar">
@@ -41,12 +51,14 @@ export const Players = ({total, list, isLoading, errors, actions }) => {
             </div>
             <div className="playerList">
                 {
-                    list.map(player => {
-                        return (
-                            <div key={player.steam_id} className="playerCard">
-                                <Player player={player} />
-                            </div>
-                        )
+                    list.map((player, i)=> {
+                        if(player.isVisible){
+                            return (
+                                <div key={player.steam_id} className="playerCard">
+                                    <Player position={i} player={player} actionFactories={{enterLobbyFactory: actions.enterLobbyFactory}} />
+                                </div>
+                            )
+                        }
                     })
                 }
             </div>

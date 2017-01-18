@@ -2,7 +2,7 @@
 import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
 /*Custom imports*/
-
+import { playerEntered, playerExited } from './actions'
 import { Lobby } from './components/lobby'
 
 class LobbyContainer extends Component{
@@ -11,24 +11,38 @@ class LobbyContainer extends Component{
         super(props)
     }
 
+    getActionsFactories() {
+        const { playerWillExit } = this.props
+        return {
+            playerExitedFactory: (player) => {
+                return () => {
+                    playerWillExit(player)
+                }
+            }
+        }
+    }
+
     render() {
+        const { players } = this.props
         return (
-            <Lobby />
+            <Lobby list={players} actionsFactories={this.getActionsFactories()} />
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    // const {  } = state.users
+    const { players } = state.lobby
     return {
-
+        players
     }
 }
 
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        playerWillExit: (player) => {
+            dispatch(playerExited(player))
+        }
     }
 
 }

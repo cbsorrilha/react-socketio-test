@@ -31,7 +31,8 @@
                 float: right;
             }
 
-            .playerList {
+            .playerList,
+            .lobbyList {
                 display: flex;
                 flex-flow: row wrap;
                 justify-content: flex-start;
@@ -78,6 +79,18 @@
 
             .player .playerDate {
                 text-align: right;
+            }
+
+            .playerCard.-lobby {
+                width: 15%;
+            }
+
+            .playerCard.-lobby .player .playerAvatar {
+                max-width: 100%;
+            }
+
+            .playerCard.-lobby .player .playerInfo {
+                text-align: center;
             }
 
         </style>

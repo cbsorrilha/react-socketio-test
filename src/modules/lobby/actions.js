@@ -1,4 +1,9 @@
-import { DUMMIE_ACTION } from './constants'
-export const dummieAction = () => {
-    return { type: DUMMIE_ACTION }
+import { PLAYER_ENTERED, PLAYER_EXITED } from './constants'
+
+export const playerEntered = (player) => {
+    return { type: PLAYER_ENTERED, player }
+}
+
+export const playerExited = (player) => {
+    return { type: PLAYER_EXITED, player }
 }
