@@ -1,5 +1,5 @@
 import { WILL_FETCH_PLAYERS, SUCCESS_FETCH_PLAYERS, ERROR_FETCH_PLAYERS } from './constants'
-import { SET_TOTAL, FILTER, ENTERED_LOBBY } from './constants'
+import { SET_TOTAL, FILTER, ENTERED_LOBBY, EXITED_LOBBY } from './constants'
 
 const initialState = {
     players: [],
@@ -44,6 +44,12 @@ export function players(state = initialState, action) {
     let players = []
 
     switch (action.type) {
+        case EXITED_LOBBY:
+            console.log("player entered the lobby", action.player)
+            action.player.lobby = null
+            players = Array.from(state.players)
+            players[action.player.position] = action.player
+            return Object.assign({}, state, { players })
         case ENTERED_LOBBY:
             console.log("player entered the lobby", action.player)
             action.player.lobby = 1

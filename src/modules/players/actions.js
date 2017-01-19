@@ -1,5 +1,5 @@
 import { WILL_FETCH_PLAYERS, SUCCESS_FETCH_PLAYERS, ERROR_FETCH_PLAYERS } from './constants'
-import { SET_TOTAL, FILTER, ENTERED_LOBBY } from './constants'
+import { SET_TOTAL, FILTER, ENTERED_LOBBY, EXITED_LOBBY } from './constants'
 
 export const willFetchPlayers = () => {
     return { type: WILL_FETCH_PLAYERS }
@@ -23,4 +23,8 @@ export const filter = (filter) => {
 
 export const enteredLobby = (player) => {
     return { type: ENTERED_LOBBY, player }
+}
+
+export const exitedLobby = (player) => {
+    return { type: EXITED_LOBBY, player }
 }
