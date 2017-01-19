@@ -28,7 +28,7 @@ export const Lobby = ({list, actionsFactories}) => {
             <div className="lobbyList">
                 {
                     list.map(player => {
-                        console.log(player)
+                        // console.log(player)
                         return (
                             <div key={player.steam_id} className="playerCard -lobby">
                                 <Player player={player} actionsFactories={actionsFactories} />
