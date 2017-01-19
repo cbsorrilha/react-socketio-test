@@ -45,17 +45,17 @@ export function players(state = initialState, action) {
 
     switch (action.type) {
         case EXITED_LOBBY:
-            console.log("player entered the lobby", action.player)
             action.player.lobby = null
             players = Array.from(state.players)
             players[action.player.position] = action.player
             return Object.assign({}, state, { players })
+
         case ENTERED_LOBBY:
-            console.log("player entered the lobby", action.player)
             action.player.lobby = 1
             players = Array.from(state.players)
             players[action.player.position] = action.player
             return Object.assign({}, state, { players })
+
         case FILTER:
             players = filters[action.filter](state.players)
             return Object.assign({}, state, { players, total: filters.helpers.count(players), activeFilter: action.filter })

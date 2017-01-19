@@ -24,7 +24,6 @@ export function lobby(state = initialState, action) {
 
         case PLAYER_EXITED:
             players = Array.from(state.players)
-
             players.splice(action.player.position, 1)
             // console.log(players)
             players = recountPosition(players)

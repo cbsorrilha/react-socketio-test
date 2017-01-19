@@ -12,11 +12,16 @@ class PlayersContainer extends Component{
     constructor(props) {
         super(props)
         window.socket.on('player:exited',this._cleanPlayer.bind(this))
+        window.socket.on('player:entered',this._enterPlayer.bind(this))
     }
 
     _cleanPlayer(player) {
         const { exitLobby } = this.props
         exitLobby(player)
+    }
+    _enterPlayer(player) {
+        const { enterLobby } = this.props
+        enterLobby(player)
     }
 
     componentDidMount() {
@@ -33,6 +38,7 @@ class PlayersContainer extends Component{
             enterLobbyFactory: (player) => {
                 return () => {
                     enterLobby(player)
+                    window.socket.emit('player:enter', player)
                 }
             }
 
@@ -71,7 +77,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         enterLobby: player => {
             dispatch(enteredLobby(player))
-            window.socket.emit('player:enter', player)
         },
         exitLobby: player => {
             dispatch(exitedLobby(player))
