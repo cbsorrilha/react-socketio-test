@@ -1,20 +1,7 @@
 import { PLAYER_ENTERED, PLAYER_EXITED } from './constants'
 
 const initialState = {
-    players: [
-        {
-            avatar:"http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/86/8680e99aca10276c1ad2b79ecd2c97ba4a369610_full.jpg",
-            username:"gabrielfgularte",
-            steam_id: "hduashduadhisa1",
-            position:0,
-        },
-        {
-            avatar:"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/3f/3fd70e29ea346c05ed961cb8ded2cec754791136_full.jpg",
-            username:"folks",
-            steam_id: "hduashduadhisa2",
-            position:1,
-        }
-    ]
+    players: []
 }
 
 const recountPosition = (players) => {

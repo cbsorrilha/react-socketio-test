@@ -9,6 +9,13 @@ class LobbyContainer extends Component{
 
     constructor(props) {
         super(props)
+        window.socket.on('player:entered', this._playerEntered.bind(this))
+    }
+
+    _playerEntered(player) {
+        const { playerWillEnter } = this.props
+        playerWillEnter(player)
+
     }
 
     getActionsFactories() {
@@ -42,7 +49,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         playerWillExit: (player) => {
             dispatch(playerExited(player))
+            window.socket.emit('player:exit', player)
+        },
+        playerWillEnter: (player) => {
+            dispatch(playerEntered(player))
         }
+
     }
 
 }

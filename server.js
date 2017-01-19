@@ -27,6 +27,16 @@ io.on('connection', function(socket){
         console.log('user logged')
         socket.emit('user logged', "User connected");
     })
+
+    socket.on('player:enter', (player) => {
+        console.log(player.username + " will enter")
+        socket.broadcast.emit('player:entered', player)
+    })
+
+    socket.on('player:exit', (player) => {
+        console.log(player.username + " will exit")
+        socket.broadcast.emit('player:exited', player)
+    })
 });
 
 app.get('/', (req, res) => {

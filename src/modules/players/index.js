@@ -4,13 +4,19 @@ import { connect } from 'react-redux'
 /*Custom imports*/
 import { Players } from './components/players'
 import { willFetchPlayers, successFetchPlayers, errorFetchPlayers } from './actions'
-import { setTotal, filter, enteredLobby } from './actions'
+import { setTotal, filter, enteredLobby, exitedLobby } from './actions'
 import { fetchPlayers } from './requests'
 
 class PlayersContainer extends Component{
 
     constructor(props) {
         super(props)
+        window.socket.on('player:exited',this._cleanPlayer.bind(this))
+    }
+
+    _cleanPlayer(player) {
+        const { exitLobby } = this.props
+        exitLobby(player)
     }
 
     componentDidMount() {
@@ -65,6 +71,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         enterLobby: player => {
             dispatch(enteredLobby(player))
+            window.socket.emit('player:enter', player)
+        },
+        exitLobby: player => {
+            dispatch(exitedLobby(player))
         },
         refresh: () => {
             dispatch(willFetchPlayers())
