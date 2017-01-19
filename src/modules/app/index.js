@@ -9,6 +9,10 @@ class AppContainer extends Component{
 
     constructor(props) {
         super(props)
+        window.socket.emit('user logged')
+        window.socket.on('user logged', (msg) => {
+            console.log(msg)
+        })
     }
 
     render() {
